@@ -1,0 +1,19 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  outline: none;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+  font-size: 1rem;
+  font-family: $ff-base;
+  background-color: $clr-base;
+  color: $clr-base-drk;
+  margin: 0;
+}
+h1, h2, h3, h4, h5, p {
+  margin: 0;
+}
