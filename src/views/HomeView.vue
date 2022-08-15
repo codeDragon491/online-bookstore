@@ -4,11 +4,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onBeforeMount } from 'vue';
+import useItems from '@/composables/useItems'
 
 export default defineComponent({
   name: 'HomeView',
   components: {
+  },
+  setup() {
+    const {
+      loading, items, error, getItems,
+    } = useItems()
+    onBeforeMount(async () => {
+      await getItems()
+    })
   },
 });
 </script>
