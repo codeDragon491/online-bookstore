@@ -4,6 +4,6 @@
 
 <style lang="scss">
 #app {
-  text-align: center;
+  margin: 5rem 2rem;
 }
 </style>

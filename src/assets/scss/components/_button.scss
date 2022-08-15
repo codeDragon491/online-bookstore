@@ -1,0 +1,33 @@
+.button {
+    width: 100%;
+    font-weight: 200;
+    letter-spacing: 1px;
+    padding: 13px;
+    outline: 0;
+    border: 1px solid $clr-ntrl-max;
+    cursor: pointer;
+    position: relative;
+    background-color: rgba( $clr-ntrl-max, 0);
+    color: $clr-ntrl-min;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button:after {
+    content: "";
+    background-color: $clr-primary;
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    top: 7px;
+    left: 7px;
+    transition: 0.2s;
+  }
+  
+  .button:hover:after {
+    top: 0px;
+    left: 0px;
+  }
+  
