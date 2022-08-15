@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <section class="items">
-      <div class="item-wrapper" v-for="item in items" :key="item.id">
+    <section data-cy="items" class="items">
+      <div data-cy="item" class="item-wrapper" v-for="item in items" :key="item.id">
         <img :src="item.image_url" :alt="items.title" />
         <div class="info-box">
           <h2 class="title">{{ item.title}}</h2>
@@ -11,7 +11,7 @@
         </div>
       </div>
     </section>
-    <section class="error">
+    <section data-cy="error" class="error">
       {{ error }}
     </section>
   </div>
