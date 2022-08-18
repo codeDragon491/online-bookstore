@@ -1,5 +1,6 @@
 <template>
   <div class="home page">
+    <basket :list="itemsInBasket" />
     <section data-cy="items" class="items">
       <div data-cy="item" class="item-wrapper" v-for="item in items" :key="item.id">
         <img :src="item.image_url" :alt="items.title" />
@@ -29,6 +30,7 @@ import useItems from '@/composables/useItems'
 export default defineComponent({
   name: 'HomeView',
   components: {
+    Basket: defineAsyncComponent(() => import(/* webpackMode: "eager" */ '@/components/Basket.vue')),
   },
   setup() {
     const {
