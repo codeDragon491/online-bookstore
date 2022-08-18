@@ -7,6 +7,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'home',
     component: HomeView,
   },
+  {
+    path: '/basket',
+    name: 'basket',
+    component: () => import(/* webpackChunkName: "basket" */ '../views/BasketView.vue'),
+  },
 ];
 
 const router = createRouter({

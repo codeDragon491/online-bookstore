@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home page">
     <section data-cy="items" class="items">
       <div data-cy="item" class="item-wrapper" v-for="item in items" :key="item.id">
         <img :src="item.image_url" :alt="items.title" />
@@ -7,7 +7,9 @@
           <h2 class="title">{{ item.title}}</h2>
           <p class="price">Price: <span>{{ item.price }} €</span></p>
           <p class="stock">In stock: <span>{{ item.stock_quantity}}</span></p>
-          <button class="button">Add to basket</button>
+          <button data-cy="button" class="button" @click="addItemToBasket(item)">
+            Add to basket
+          </button>
         </div>
       </div>
     </section>
@@ -18,7 +20,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount } from 'vue';
+import {
+  defineComponent, onBeforeMount, defineAsyncComponent, onUnmounted,
+} from 'vue';
+
 import useItems from '@/composables/useItems'
 
 export default defineComponent({
@@ -27,21 +32,23 @@ export default defineComponent({
   },
   setup() {
     const {
-      loading, items, error, getItems,
+      loading, items, error, getItems, addItemToBasket, itemsInBasket,
     } = useItems()
+
     onBeforeMount(async () => {
       await getItems()
     })
+    onUnmounted(() => {
+      items.value = []
+      error.value = ''
+    })
     return {
-      items, error,
+      items, error, addItemToBasket, itemsInBasket,
     }
   },
 });
 </script>
 <style lang="scss" scoped>
-.home {
-  margin: 0 auto;
-}
 .items {
   display: grid;
   grid-template-columns: repeat(auto-fill, min(calc(200px + (2 * 2rem))));

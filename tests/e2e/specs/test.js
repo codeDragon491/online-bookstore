@@ -12,14 +12,13 @@ describe('Items API test cases', () => {
     ).as('getServerFailure')
 
     cy.visit('http://172.16.3.255:8080/')
-    
+
     cy.wait('@getServerFailure')
 
     cy.get('[data-cy="error"]')
       .contains(errorMsg)
       .should('be.visible')
   })
-
 
   it('The request fails (eg connection timeout)', () => {
     const errorMsg = 'Something went wrong. Try again later'

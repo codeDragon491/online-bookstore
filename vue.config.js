@@ -7,7 +7,7 @@ module.exports = defineConfig({
       sass: {
         additionalData: `
           @import "@/assets/scss/abstracts/_variables.scss";
-        `    
+        `
       }
     }
   },
