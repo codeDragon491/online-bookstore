@@ -13,6 +13,7 @@
           </button>
         </div>
       </div>
+      <ItemSkeleton v-for="index in (10 - items.length)" :key="index" />
     </section>
     <section data-cy="error" class="error">
       {{ error }}
@@ -31,6 +32,7 @@ export default defineComponent({
   name: 'HomeView',
   components: {
     Basket: defineAsyncComponent(() => import(/* webpackMode: "eager" */ '@/components/Basket.vue')),
+    ItemSkeleton: defineAsyncComponent(() => import('@/components/ItemSkeleton.vue')),
   },
   setup() {
     const {

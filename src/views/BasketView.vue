@@ -18,6 +18,7 @@
           </div>
         </div>
       </div>
+      <ItemSkeleton v-for="index in (itemsInBasket.length - items.length)" :key="index" />
     </section>
     <section v-if="items.length" class="total">
       <h3 class="total-amount-discount" v-if="onDiscount">Total amount:
@@ -35,7 +36,7 @@
 
 <script lang="ts">
 import {
-  defineComponent, onBeforeMount, onUnmounted, ref, onUpdated, Ref,
+  defineComponent, defineAsyncComponent, onBeforeMount, onUnmounted, ref, onUpdated, Ref,
 } from 'vue';
 
 import useItems from '@/composables/useItems'
@@ -43,6 +44,7 @@ import useItems from '@/composables/useItems'
 export default defineComponent({
   name: 'BasketView',
   components: {
+    ItemSkeleton: defineAsyncComponent(() => import('@/components/ItemSkeleton.vue')),
   },
   setup() {
     // only mock data for options
@@ -97,7 +99,7 @@ export default defineComponent({
     })
 
     return {
-      items, error, options, totalAmount, totalAmountDiscount, onDiscount,
+      items, error, options, totalAmount, totalAmountDiscount, onDiscount, itemsInBasket,
     }
   },
 });
