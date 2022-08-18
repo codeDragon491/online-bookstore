@@ -1,47 +1,12 @@
 .items {
     display: grid;
-    grid-template-columns: repeat(auto-fill, min(calc(200px + (2 * 2em))));
-    grid-gap: 3em;
+    grid-template-columns: repeat(auto-fill, min(calc(200px + (2 * 2rem))));
+    grid-gap: 3rem;
     justify-content: center;
-  }
-  .item-wrapper {
-    text-align: center;
-    img {
-      padding: 2em;
-      box-shadow: rgba($clr-ntrl-min, 0.2) 0px 0px 0px 1px inset,
-      rgba($clr-base-drk, 0.9) 0px 0px 0px 1px;
-    }
-    .info-box {
-      margin: 1rem 0;
-      .price {
-        margin: 1rem 0;
-        span {
-          font-size: 1.25rem;
-        }
-      }
-      .quantity, .stock {
-        margin-bottom: 1rem;
-      }
-      .button {
-        margin-top: auto;
-      }
-   }
   }
   @media (min-width: 600px) {
     .items {
-      grid-template-columns: repeat(auto-fill, min(calc(400px + (2 * 2em)) + 2rem));
-    }
-    .item-wrapper {
-      display: flex;
-      text-align: left;
-      .info-box {
-        display: flex;
-        flex-direction: column;
-        margin: 1.5rem 0 2rem 2rem;
-      }
-      .button {
-        width: 200px;
-      }
+      grid-template-columns: repeat(auto-fill, min(calc(400px + (2 * 2rem)) + 2rem));
     }
   }
   

@@ -1,24 +1,20 @@
 <template>
   <div class="basket page">
      <section data-cy="items" class="items">
-      <div data-cy="item" class="item-wrapper" v-for="item in items" :key="item.id">
-        <img :src="item.image_url" :alt="items.title" />
-        <div class="info-box">
-          <h2 class="title">{{ item.title}}</h2>
-          <p class="price">Price: <span>{{ item.price }} €</span></p>
-          <p class="quantity">Quantity: <span> {{ item.quantity }}</span></p>
-          <div class="button">
-            <label for="item-select">
-              <select v-model="item.quantity" name="item-select">
-                <option v-for="option in options" :key="option.value" :value="option.value">
-                  {{ option.text }}
-                </option>
-              </select>
-            </label>
+        <Item v-for="(item, index) in items" :key="item.id" v-model:item="items[index]">
+          <template v-slot:button>
+            <div class="button">
+              <label for="item-select">
+                <select v-model="item.quantity" name="item-select">
+                  <option v-for="option in options" :key="option.value" :value="option.value">
+                    {{ option.text }}
+                  </option>
+                </select>
+              </label>
           </div>
-        </div>
-      </div>
-      <ItemSkeleton v-for="index in (itemsInBasket.length - items.length)" :key="index" />
+          </template>
+        </Item>
+        <ItemSkeleton v-for="index in (itemsInBasket.length - items.length)" :key="index" />
     </section>
     <section v-if="items.length" class="total">
       <h3 class="total-amount-discount" v-if="onDiscount">Total amount:
@@ -44,6 +40,7 @@ import useItems from '@/composables/useItems'
 export default defineComponent({
   name: 'BasketView',
   components: {
+    Item: defineAsyncComponent(() => import('@/components/Item.vue')),
     ItemSkeleton: defineAsyncComponent(() => import('@/components/ItemSkeleton.vue')),
   },
   setup() {
