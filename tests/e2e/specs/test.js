@@ -53,3 +53,49 @@ describe('Items API test cases', () => {
       .should('have.length.least', 1)
   })
 })
+
+describe('Purchasing items test cases', () => {
+  const baseURL = 'https://frozen-wave-24832.herokuapp.com/'
+
+  const today = new Date()
+  const date = today.getDate()
+  const month = today.getMonth()
+
+  it('Simulate purchasing on the 1st of August.', () => {
+    cy.intercept(
+      'GET',
+      `${baseURL}/items`,
+    ).as('getItemsComplete')
+
+    cy.visit('http://172.16.3.255:8080/')
+
+    cy.wait('@getItemsComplete')
+
+    cy.get('[data-cy="item"]:first [data-cy="button"]').click()
+
+    cy.visit('http://172.16.3.255:8080/basket').then(() => {
+      if (date === 1 && month === 7) {
+        cy.get('.total-amount-discount span:nth-child(1)').contains('8.44 €')
+      } else cy.get('.total-amount-discount span:nth-child(1)').should('not.exist')
+    })
+  })
+
+  it('Simulate purchasing on any other date.', () => {
+    cy.intercept(
+      'GET',
+      `${baseURL}/items`,
+    ).as('getItemsComplete')
+
+    cy.visit('http://172.16.3.255:8080/')
+
+    cy.wait('@getItemsComplete')
+
+    cy.get('[data-cy="item"]:first [data-cy="button"]').click()
+
+    cy.visit('http://172.16.3.255:8080/basket').then(() => {
+      if (date !== 1 || month !== 7) {
+        cy.get('.total-amount span:nth-child(1)').contains('10.55 €')
+      } else cy.get('.total-amount span:nth-child(1)').should('not.exist')
+    })
+  })
+})
