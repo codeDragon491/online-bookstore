@@ -1,5 +1,24 @@
 # online-bookstore
 
+## Project description
+```
+This project has been implemented using Vue.js 3 with Typescript due to the following reasons:
+
+I am mostly versed with with Vue.js.
+Vue3 with the Compostion API with the concept of composables and the setup function
+allows for more reusability of stateful logic of components and therefore keeping component
+logic more clean.
+
+Typescript helps to catch errors early at runtime and with its strong static typing makes my
+code more secure.
+
+As a CSS preprosssor I used Sass that enables me to use things like variables, nested rules,
+inline imports and more. Overall it also allows for more reusability and maintainability of CSS.
+
+To improve the improve the display time for subsequent visits I would use the
+```
+[swrv library](https://github.com/Kong/swrv?fbclid=IwAR3MbCHqDtWKhQvq-JBu6BTSYSpqH4Dd6jjpaH2VpA5cTcyf0SPNyDC6RzI/)
+
 ## Project setup
 ```
 npm install
