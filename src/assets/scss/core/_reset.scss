@@ -17,3 +17,24 @@ body {
 h1, h2, h3, h4, h5, p {
   margin: 0;
 }
+select {
+  // A reset of styles, including removing the default dropdown arrow
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0 1rem 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  // Stack above custom arrow
+  z-index: 1;
+  // Remove dropdown arrow in IE10 & IE11
+  &::-ms-expand {
+    display: none;
+  }
+  // Remove focus outline, will add on alternate element
+  outline: none;
+}
