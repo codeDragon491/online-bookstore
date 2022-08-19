@@ -20,6 +20,7 @@ const error = ref('')
 const loading = ref(false)
 const items: Ref<Book[]> = ref([])
 const itemsInBasket: Ref<BookRef[]> = ref([])
+
 if (localStorage.getItem('itemsInBasket')) {
   itemsInBasket.value = JSON.parse(localStorage.getItem('itemsInBasket')!)
 }
@@ -61,9 +62,8 @@ const getItem = async (id: number) => {
 
 const addItemToBasket = (item: Book) => {
   if ((itemsInBasket.value.some((i) => i.id === item.id))) {
-    const itemIndex = itemsInBasket.value.findIndex(((el) => el.id === item.id));
-    itemsInBasket.value[itemIndex].quantity = itemsInBasket.value[itemIndex].quantity
-      ? itemsInBasket.value[itemIndex].quantity! + 1 : 1
+    const itemIndex = itemsInBasket.value.findIndex(((i) => i.id === item.id));
+    itemsInBasket.value[itemIndex].quantity = itemsInBasket.value[itemIndex].quantity! + 1
     localStorage.setItem('itemsInBasket', JSON.stringify(itemsInBasket.value))
   } else {
     const newItem = { id: item.id, quantity: 1 }

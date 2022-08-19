@@ -1,7 +1,7 @@
 <template>
   <div class="home page">
     <basket :list="itemsInBasket" />
-    <section data-cy="items" class="items">
+    <section v-if="!error" data-cy="items" class="items">
       <Item v-for="item in items" :key="item.id" :item="item">
         <template v-slot:button>
           <button data-cy="button" class="button" @click="addItemToBasket(item)">
@@ -11,7 +11,7 @@
       </Item>
       <ItemSkeleton v-for="index in (10 - items.length)" :key="index" />
     </section>
-    <section data-cy="error" class="error">
+    <section v-if="error && !items.length" data-cy="error" class="error">
       {{ error }}
     </section>
   </div>
@@ -33,7 +33,7 @@ export default defineComponent({
   },
   setup() {
     const {
-      loading, items, error, getItems, addItemToBasket, itemsInBasket,
+      items, error, getItems, addItemToBasket, itemsInBasket,
     } = useItems()
 
     onBeforeMount(async () => {

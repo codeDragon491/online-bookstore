@@ -1,33 +1,36 @@
 <template>
   <div class="basket page">
-     <section data-cy="items" class="items">
+      <section v-if="!error" data-cy="items" class="items">
         <Item v-for="(item, index) in items" :key="item.id" v-model:item="items[index]">
-          <template v-slot:button>
-            <div class="button">
-              <label for="item-select">
-                <select v-model="item.quantity" name="item-select">
-                  <option v-for="option in options" :key="option.value" :value="option.value">
-                    {{ option.text }}
-                  </option>
-                </select>
-              </label>
-          </div>
-          </template>
-        </Item>
-        <ItemSkeleton v-for="index in (itemsInBasket.length - items.length)" :key="index" />
-    </section>
-    <section v-if="items.length" class="total">
-      <h3 class="total-amount-discount" v-if="onDiscount">Total amount:
-        <span>{{ totalAmountDiscount() }} €</span>
-        <span>{{ totalAmount() }} €</span>
-        <span>-20%</span>
-      </h3>
-      <h3 class="total-amount" v-else>Total amount: <span>{{ totalAmount() }} €</span></h3>
-    </section>
-    <section data-cy="error" class="error">
-      {{ error }}
-    </section>
-  </div>
+            <template v-slot:button>
+              <div class="button">
+                <label for="item-select">
+                  <select v-model="item.quantity" name="item-select">
+                    <option v-for="option in options" :key="option.value" :value="option.value">
+                      {{ option.text }}
+                    </option>
+                  </select>
+                </label>
+            </div>
+            </template>
+          </Item>
+          <ItemSkeleton v-for="index in (itemsInBasket.length - items.length)" :key="index" />
+      </section>
+      <section v-if="!error && items.length" class="total">
+        <h3 class="total-amount-discount" v-if="onDiscount">Total amount:
+          <span>{{ totalAmountDiscount() }} €</span>
+          <span>{{ totalAmount() }} €</span>
+          <span>-20%</span>
+        </h3>
+        <h3 class="total-amount" v-else>Total amount:
+          <span>{{ totalAmount() }} €</span>
+        </h3>
+      </section>
+      <section v-if="error && !items.length" data-cy="error" class="error">
+        {{ error }}
+      </section>
+    </div>
+>>>>>>> fc13818 (Cleanup and improve code quality)
 </template>
 
 <script lang="ts">
@@ -44,13 +47,13 @@ export default defineComponent({
     ItemSkeleton: defineAsyncComponent(() => import('@/components/ItemSkeleton.vue')),
   },
   setup() {
-    // only mock data for options
+    // mock data for options
     const options = ref([{ value: 1, text: 'Change quantity' }, { value: 1, text: 1 }, { value: 2, text: 2 }, { value: 3, text: 3 }])
     const onDiscount = ref(false)
     const priceSum: Ref<null | number> = ref(null)
 
     const {
-      loading, items, itemsInBasket, error, getItem,
+      items, itemsInBasket, error, getItem,
     } = useItems()
 
     const today = new Date()
@@ -60,7 +63,7 @@ export default defineComponent({
 
     const calculatePriceSum = () => {
       const initialValue = 0
-      priceSum.value = items.value
+      return items.value
         .reduce((accumulator, item) => accumulator + (item.price * item.quantity!), initialValue)
     }
 
@@ -91,7 +94,7 @@ export default defineComponent({
     })
 
     onUpdated(() => {
-      calculatePriceSum()
+      priceSum.value = calculatePriceSum()
       totalAmountDiscount()
     })
 
