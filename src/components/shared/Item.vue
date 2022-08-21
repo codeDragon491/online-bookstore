@@ -12,9 +12,9 @@
 </template>
 <script lang="ts">
 import {
-  defineComponent, PropType, toRef, onUpdated,
+  defineComponent, PropType, toRef, watch,
 } from 'vue'
-import { Book } from '@/composables/useItems'
+import { Book } from '@/models/book.model'
 
 export default defineComponent({
   name: 'ItemComponent',
@@ -28,9 +28,10 @@ export default defineComponent({
   setup(props, context) {
     const itemRef = toRef(props, 'item')
 
-    onUpdated(() => {
+    watch(() => itemRef.value, () => {
       context.emit('update:item', itemRef.value)
-    })
+    }, { deep: true })
+
     return { itemRef }
   },
 })

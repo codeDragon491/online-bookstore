@@ -1,5 +1,6 @@
 <template>
-  <div class="basket page">
+  <div class="basket">
+      <basket :list="itemsInBasket" />
       <section v-if="!error" data-cy="items" class="items">
         <Item v-for="(item, index) in items" :key="item.id" v-model:item="items[index]">
             <template v-slot:button>
@@ -28,16 +29,17 @@
 <script lang="ts">
 import {
   defineComponent, defineAsyncComponent, onBeforeMount, onUnmounted, ref,
-} from 'vue';
+} from 'vue'
 
 import useItems from '@/composables/useItems'
 
 export default defineComponent({
   name: 'BasketView',
   components: {
-    Item: defineAsyncComponent(() => import('@/components/Item.vue')),
-    ItemSkeleton: defineAsyncComponent(() => import('@/components/ItemSkeleton.vue')),
-    TotalAmount: defineAsyncComponent(() => import(/* webpackMode: "eager" */ '@/components/TotalAmount.vue')),
+    Basket: defineAsyncComponent(() => import(/* webpackMode: "eager" */ '@/components/shared/Basket.vue')),
+    Item: defineAsyncComponent(() => import(/* webpackChunkName: "item" */ '@/components/shared/Item.vue')),
+    ItemSkeleton: defineAsyncComponent(() => import(/* webpackMode: "eager" */ '@/components/shared/ItemSkeleton.vue')),
+    TotalAmount: defineAsyncComponent(() => import(/* webpackChunkName: "totalAmount" */'@/components/basket/TotalAmount.vue')),
   },
   setup() {
     // mock data for options
@@ -48,6 +50,7 @@ export default defineComponent({
     } = useItems()
 
     onBeforeMount(async () => {
+      // get each item based on the number of items in the basket
       itemsInBasket.value.forEach(async (item) => {
         await getItem(item.id)
       })
@@ -64,6 +67,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .basket {
-  max-width: 50%;
+  display: inline-block;
 }
 </style>

@@ -9,9 +9,9 @@
     </div>
 </template>
 <script lang="ts">
-import { computed, PropType, defineComponent } from 'vue';
+import { computed, PropType, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
-import { BookRef } from '@/composables/useItems';
+import { BookRef } from '@/models/book.model'
 
 export default defineComponent({
   name: 'BasketComponent',

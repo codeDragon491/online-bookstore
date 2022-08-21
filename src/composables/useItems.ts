@@ -1,20 +1,7 @@
-import { ref, Ref } from 'vue';
+import { ref, Ref } from 'vue'
 
-import axiosConfig from '@/helpers/axiosConfig';
-
-export interface Book {
-  discountSet: string
-  id: number
-  imageUrl: string
-  price: number
-  stockQuantity: number
-  title: string
-  quantity?: number
-}
-export interface BookRef {
-  id: number
-  quantity: number
-}
+import axiosConfig from '@/helpers/axiosConfig'
+import { Book, BookRef } from '@/models/book.model'
 
 const error = ref('')
 const loading = ref(false)
@@ -60,6 +47,8 @@ const getItem = async (id: number) => {
   }
 }
 
+// add item( id and quantity) to basket and save it to localstorage
+// compare on item id and if already in the basket only increase quantity of that item
 const addItemToBasket = (item: Book) => {
   if ((itemsInBasket.value.some((i) => i.id === item.id))) {
     const itemIndex = itemsInBasket.value.findIndex(((i) => i.id === item.id));

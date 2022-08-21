@@ -17,6 +17,5 @@ module.exports = {
     semi: [0, 'never'],
     'vuejs-accessibility/click-events-have-key-events': 'off',
     'vuejs-accessibility/label-has-for': 'off',
-    'consistent-return': 'off',
   },
 };

@@ -1,23 +1,23 @@
 <template>
   <h3 class="total-amount-discount" v-if="onDiscount">Total amount:
-    <span>{{ totalAmountDiscount() }} €</span>
-    <span>{{ totalAmount() }} €</span>
+    <span>{{ getTotalAmountDiscount() }} €</span>
+    <span>{{ getTotalAmount() }} €</span>
     <span>-20%</span>
   </h3>
   <h3 class="total-amount" v-else>Total amount:
-    <span>{{ totalAmount() }} €</span>
+    <span>{{ getTotalAmount() }} €</span>
   </h3>
 </template>
 
 <script lang="ts">
 import {
-  defineComponent, PropType, onUpdated, onMounted,
+  defineComponent, PropType, onMounted, watch,
 } from 'vue'
-import { Book } from '@/composables/useItems'
+import { Book } from '@/models/book.model'
 import usePriceCalc from '@/composables/usePriceCalc'
 
 export default defineComponent({
-  name: 'TotalAmount',
+  name: 'getTotalAmount',
   props: {
     items: {
       type: Array as PropType<Array<Book>>,
@@ -26,18 +26,20 @@ export default defineComponent({
   },
   setup(props) {
     const {
-      calculatePriceSum, totalAmount, totalAmountDiscount, onDiscount,
+      calculatePriceSum, getTotalAmount, getTotalAmountDiscount, onDiscount,
     } = usePriceCalc()
 
-    onUpdated(() => {
-      calculatePriceSum(props.items)
-      totalAmountDiscount()
-    })
     onMounted(() => {
       calculatePriceSum(props.items)
+      getTotalAmountDiscount()
     })
 
-    return { totalAmount, totalAmountDiscount, onDiscount }
+    watch(() => props.items, () => {
+      calculatePriceSum(props.items)
+      getTotalAmountDiscount()
+    }, { deep: true })
+
+    return { getTotalAmount, getTotalAmountDiscount, onDiscount }
   },
 })
 </script>
@@ -47,8 +49,7 @@ export default defineComponent({
   border-top: 1px solid $clr-ntrl-max;
   margin: 3em 0;
   padding: 1.5em 0;
-  display: flex;
-  justify-content: center;
+  text-align: center;
 }
 .total-amount-discount {
   span:nth-child(2) {

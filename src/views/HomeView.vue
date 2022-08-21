@@ -1,5 +1,5 @@
 <template>
-  <div class="home page">
+  <div class="home">
     <basket :list="itemsInBasket" />
     <section v-if="!error" data-cy="items" class="items">
       <Item v-for="item in items" :key="item.id" :item="item">
@@ -20,16 +20,16 @@
 <script lang="ts">
 import {
   defineComponent, onBeforeMount, defineAsyncComponent, onUnmounted,
-} from 'vue';
+} from 'vue'
 
 import useItems from '@/composables/useItems'
 
 export default defineComponent({
   name: 'HomeView',
   components: {
-    Basket: defineAsyncComponent(() => import(/* webpackMode: "eager" */ '@/components/Basket.vue')),
-    Item: defineAsyncComponent(() => import('@/components/Item.vue')),
-    ItemSkeleton: defineAsyncComponent(() => import('@/components/ItemSkeleton.vue')),
+    Basket: defineAsyncComponent(() => import(/* webpackMode: "eager" */ '@/components/shared/Basket.vue')),
+    Item: defineAsyncComponent(() => import('@/components/shared/Item.vue')),
+    ItemSkeleton: defineAsyncComponent(() => import(/* webpackMode: "eager" */ '@/components/shared/ItemSkeleton.vue')),
   },
   setup() {
     const {
@@ -49,3 +49,10 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss" scoped>
+@media  screen and (min-width:  2160px) {
+  .home {
+    max-width: 80%;
+  }
+}
+</style>

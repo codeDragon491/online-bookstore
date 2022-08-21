@@ -8,7 +8,7 @@ describe('Items API test cases', () => {
     cy.intercept(
       'GET',
       `${baseURL}/items`,
-      { statusCode: 500 }
+      { statusCode: 500 },
     ).as('getServerFailure')
 
     cy.visit('http://172.16.3.255:8080/')
@@ -16,8 +16,8 @@ describe('Items API test cases', () => {
     cy.wait('@getServerFailure')
 
     cy.get('[data-cy="error"]')
+      .should('exist')
       .contains(errorMsg)
-      .should('be.visible')
   })
 
   it('The request fails (eg connection timeout)', () => {
@@ -25,7 +25,7 @@ describe('Items API test cases', () => {
     cy.intercept(
       'GET',
       `${baseURL}/items`,
-      { forceNetworkError: true }
+      { forceNetworkError: true },
     ).as('getNetworkFailure')
 
     cy.visit('http://172.16.3.255:8080/')
@@ -33,8 +33,8 @@ describe('Items API test cases', () => {
     cy.wait('@getNetworkFailure')
 
     cy.get('[data-cy="error"]')
+      .should('exist')
       .contains(errorMsg)
-      .should('be.visible')
   })
 
   it('The api request for items completes successfully.', () => {
@@ -48,8 +48,8 @@ describe('Items API test cases', () => {
     cy.wait('@getItemsComplete')
 
     cy.get('[data-cy="items"]')
+      .should('exist')
       .find('[data-cy="item"]')
-      .should('be.visible')
       .should('have.length.least', 1)
   })
 })
